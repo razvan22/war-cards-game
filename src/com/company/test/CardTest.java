@@ -7,20 +7,24 @@ import org.junit.jupiter.api.*;
 
 
 class CardTest {
-    Card card = new Card();
+    String suite = "hearts";
+    String value = "7";
+    Card card = new Card(suite, value);
 
     @Test
     public void testConstructor(){
         System.out.println("=== testConstructor ===");
-        Card card = new Card("suite","value");
         Assertions.assertNotNull(card.getValue());
         Assertions.assertNotNull(card.getSuite());
+        Assertions.assertEquals(value, card.getValue());
+        Assertions.assertEquals(suite, card.getSuite());
     }
 
     @Test
     public void testGetSuite() {
         System.out.println("=== testGetSuite ===");
         Assertions.assertNotNull(card.getSuite());
+        Assertions.assertTrue(card.getSuite() instanceof String);
     }
 
 
@@ -28,6 +32,8 @@ class CardTest {
     public void testGetValue(){
         System.out.println("=== testGetValue ===");
         Assertions.assertNotNull(card.getValue());
+        Assertions.assertTrue(card.getValue() instanceof String);
+
     }
 
 
@@ -37,8 +43,4 @@ class CardTest {
         Assertions.assertNotNull(card.getCard());
 
     }
-
-
-
-
 }
