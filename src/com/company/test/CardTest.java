@@ -1,16 +1,44 @@
 package com.company.test;
 
-import org.junit.Test;
+import com.company.Card;
 import org.junit.jupiter.api.*;
 
-class CardTest {
 
-    CardTest(){}
+
+
+class CardTest {
+    Card card = new Card();
 
     @Test
-    private void testGetSuite(){
-        
+    public void testConstructor(){
+        System.out.println("=== testConstructor ===");
+        Card card = new Card("suite","value");
+        Assertions.assertNotNull(card.getValue());
+        Assertions.assertNotNull(card.getSuite());
     }
+
+    @Test
+    public void testGetSuite() {
+        System.out.println("=== testGetSuite ===");
+        Assertions.assertNotNull(card.getSuite());
+    }
+
+
+    @Test
+    public void testGetValue(){
+        System.out.println("=== testGetValue ===");
+        Assertions.assertNotNull(card.getValue());
+    }
+
+
+    @Test
+    public void testGetCard(){
+        System.out.println("=== testGetCard ===");
+        Assertions.assertNotNull(card.getCard());
+
+    }
+
+
 
 
 }

@@ -1,23 +1,23 @@
 package com.company;
 
-import java.sql.Array;
-
 public class Card {
 
-    private final String suite;
-    private final String value;
+    private String suite;
+    private String value;
+
+    public Card(){}
 
     public Card(String suite, String value) {
         this.suite = suite;
         this.value = value;
     }
 
-    private String getSuite() {
-        return suite;
+    public String getSuite() {
+        return null;
     }
 
-    private String getValue() {
-        return value;
+    public String getValue() {
+        return null;
     }
 
     public String getCard(){
