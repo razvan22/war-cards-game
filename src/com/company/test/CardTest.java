@@ -13,7 +13,7 @@ class CardTest {
 
     @Test
     public void testConstructor(){
-        System.out.println("=== testConstructor ===");
+        System.out.println("=== CardTest testConstructor ===");
         Assertions.assertNotNull(card.getValue());
         Assertions.assertNotNull(card.getSuite());
         Assertions.assertEquals(value, card.getValue());
