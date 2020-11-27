@@ -8,14 +8,19 @@ public class Deck {
     private final CardsFetcher cardsFetcher;
 
     public Deck(CardsFetcher cardsFetcher){
-        this.cardsFetcher = cardsFetcher;
+        if (cardsFetcher == null){
+            throw  new NullPointerException("Cards fetcher should not be null");
+        }
+        else {
+            this.cardsFetcher = cardsFetcher;
+        }
     }
 
-    private ArrayList<Card> initializeDeck(){
-        return null;
+    public boolean initializeDeck(){
+        return false;
     };
 
-    private ArrayList<Card> getDeck(){
+    public ArrayList<Card> getDeck(){
         return null;
     };
 }
