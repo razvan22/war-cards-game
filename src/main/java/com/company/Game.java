@@ -1,4 +1,4 @@
-package com.company;
+package company;
 
 public class Game {
     private Player player1;
