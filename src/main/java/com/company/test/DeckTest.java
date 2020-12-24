@@ -13,7 +13,8 @@ public class DeckTest {
     @Test
     public void deckConstructorTest(){
         System.out.println("=== deckConstructorTest ===");
-        Deck deck = new Deck(null);
+        Deck deck = new Deck( cardsFetcher);
+
     }
 
     @Test
