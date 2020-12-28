@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 
 public class CardsFetcher {
     private final String cardsFilePath = "resources/deck_of_cards.json";
-    private final ArrayList<Card> cards = new ArrayList<>();
+    private ArrayList<Card> cards = null;
 
 
 
@@ -22,6 +22,7 @@ public class CardsFetcher {
 
         try {
 
+            cards = new ArrayList<>();
             Gson gson = new Gson();
             BufferedReader br = new BufferedReader(new FileReader(filePath));
             Arrays.stream(gson.fromJson(br, Card[].class)).forEach(this::setCard);
@@ -33,6 +34,8 @@ public class CardsFetcher {
     }
 
     public boolean readCardsFromJsonFile() {
+        cards = new ArrayList<>();
+
         Gson gson = new Gson();
         try {
             BufferedReader br = new BufferedReader(new FileReader(cardsFilePath));

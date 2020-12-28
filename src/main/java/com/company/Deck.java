@@ -13,6 +13,7 @@ public class Deck implements DeckUtilities {
     public Deck(CardsFetcher cardsFetcher){
 
         if (cardsFetcher == null){
+
             throw  new NullPointerException("Cards fetcher should not be null");
         }
         else {
@@ -30,6 +31,10 @@ public class Deck implements DeckUtilities {
         }
 
         setCards(cardsFetcher.getCards());
+    }
+
+    public CardsFetcher getCardsFetcher() {
+        return cardsFetcher;
     }
 
     @Override
@@ -107,3 +112,5 @@ public class Deck implements DeckUtilities {
         return splintedDeck;
     }
 }
+
+
