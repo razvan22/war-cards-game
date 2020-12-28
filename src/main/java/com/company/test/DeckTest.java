@@ -6,18 +6,28 @@ import company.Deck;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+
 
 public class DeckTest {
     CardsFetcher cardsFetcher = new CardsFetcher();
     Deck deck = new Deck( cardsFetcher);
 
-
     @Test
     public void deckConstructorTest(){
         System.out.println("=== deckConstructorTest ===");
         Assertions.assertNotNull(deck.getCardsFetcher());
+    }
+
+    @Test
+    public void deckConstructorExceptionTest(){
+        System.out.println("=== deckConstructorExceptionTest ===");
+        CardsFetcher cardsFetcher = null;
+
+        var exception = Assertions.assertThrows(
+                NullPointerException.class,
+                () -> deck = new Deck(cardsFetcher));
+        Assertions.assertEquals("Cards fetcher should not be null", exception.getMessage());
     }
 
     @Test
@@ -39,7 +49,7 @@ public class DeckTest {
     }
 
     @Test
-    public void testInsterCard(){
+    public void testInsertCard(){
         System.out.println("=== testInsertCard ===");
         Card card = new Card("harts","1");
         Assertions.assertTrue(deck.insertCard(card));
@@ -48,10 +58,23 @@ public class DeckTest {
     @Test
     public void testSplitDeck(){
         System.out.println("=== testSplitDeck ===");
-        Assertions.assertTrue(deck.splitDeck().size() == 2);
-        System.out.println(deck.splitDeck().size());
+        ArrayList<ArrayList<Card>> splitedDeck = deck.splitDeck();
+        ArrayList<Card> firstHand = splitedDeck.get(0);
+        ArrayList<Card> secondHand = splitedDeck.get(1);
 
+        Assertions.assertEquals(splitedDeck.size(), 2);
+        Assertions.assertEquals(firstHand.size(), 26);
+        Assertions.assertEquals(secondHand.size(), 26);
     }
 
+    @Test
+    public void testSetCards(){
+        ArrayList<Card> cards = new ArrayList<>();
+        var exception = Assertions.assertThrows(
+                IllegalStateException.class,
+                () -> deck.setCards(cards)
+        );
 
+        Assertions.assertEquals("cards.size() must be 52", exception.getMessage());
+    }
 }
