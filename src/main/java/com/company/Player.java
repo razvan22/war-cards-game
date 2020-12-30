@@ -2,24 +2,23 @@ package company;
 
 public class Player {
 
-    private String name;
-    private GameDeck gameDeck;
+    private final String name;
+    private final PlayerDeck playerDeck;
 
-    public Player(String name , GameDeck gameDeck){
+    public Player(String name, PlayerDeck playerDeck) {
         this.name = name;
-        this.gameDeck = gameDeck;
+        this.playerDeck = playerDeck;
     }
 
-    public String getName(){
-        return null;
+    public String getName() {
+        return name;
     }
 
-    public GameDeck getDeck() {
-        return null;
+    public Card flipCard(){
+       return playerDeck.drawCard();
     }
 
-    public void setDeck(GameDeck gameDeck) {
-        this.gameDeck = gameDeck;
+    public boolean addCardToDeck(Card card){
+        return playerDeck.insertCard(card);
     }
 }
-
