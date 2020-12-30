@@ -10,7 +10,7 @@ public class PlayerDeck implements DeckUtilities{
     public PlayerDeck(ArrayList<Card> cards) {
 
         if (cards.size() < 26){
-            throw new NullPointerException("cards.size() should be 26");
+            throw new IllegalStateException("cards.size() should be 26");
         }
         else {
             this.cards = cards;
@@ -48,4 +48,4 @@ public class PlayerDeck implements DeckUtilities{
                 .findFirst()
                 .getAsInt();
     }
-}
+        }
