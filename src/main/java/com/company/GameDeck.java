@@ -5,12 +5,13 @@ import company.exceptions.WrongBooleanException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Deck implements DeckUtilities {
+public class GameDeck implements DeckUtilities {
 
     private ArrayList<Card> cards;
     private final CardsFetcher cardsFetcher;
 
-    public Deck(CardsFetcher cardsFetcher){
+
+    public GameDeck(CardsFetcher cardsFetcher){
 
         if (cardsFetcher == null){
 

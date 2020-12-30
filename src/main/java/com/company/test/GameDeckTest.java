@@ -2,21 +2,21 @@ package company.test;
 
 import company.Card;
 import company.CardsFetcher;
-import company.Deck;
+import company.GameDeck;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.ArrayList;
 
 
-public class DeckTest {
+public class GameDeckTest {
     CardsFetcher cardsFetcher = new CardsFetcher();
-    Deck deck = new Deck( cardsFetcher);
+    GameDeck gameDeck = new GameDeck( cardsFetcher);
 
     @Test
     public void deckConstructorTest(){
         System.out.println("=== deckConstructorTest ===");
-        Assertions.assertNotNull(deck.getCardsFetcher());
+        Assertions.assertNotNull(gameDeck.getCardsFetcher());
     }
 
     @Test
@@ -26,39 +26,39 @@ public class DeckTest {
 
         var exception = Assertions.assertThrows(
                 NullPointerException.class,
-                () -> deck = new Deck(cardsFetcher));
+                () -> gameDeck = new GameDeck(cardsFetcher));
         Assertions.assertEquals("Cards fetcher should not be null", exception.getMessage());
     }
 
     @Test
     public void initializeDeckTest(){
         System.out.println("=== initializeDeckTest ===");
-        Assertions.assertTrue(deck.initializeDeck());
+        Assertions.assertTrue(gameDeck.initializeDeck());
     }
 
     @Test
     public void getDeckTest(){
         System.out.println("=== getDeckTest ===");
-        Assertions.assertNotNull(deck.getDeck());
+        Assertions.assertNotNull(gameDeck.getDeck());
     }
 
     @Test
     public void testDrawCard(){
         System.out.println("=== testDrawCard ===");
-        Assertions.assertNotNull(deck.drawCard());
+        Assertions.assertNotNull(gameDeck.drawCard());
     }
 
     @Test
     public void testInsertCard(){
         System.out.println("=== testInsertCard ===");
         Card card = new Card("harts","1");
-        Assertions.assertTrue(deck.insertCard(card));
+        Assertions.assertTrue(gameDeck.insertCard(card));
     }
 
     @Test
     public void testSplitDeck(){
         System.out.println("=== testSplitDeck ===");
-        ArrayList<ArrayList<Card>> splitedDeck = deck.splitDeck();
+        ArrayList<ArrayList<Card>> splitedDeck = gameDeck.splitDeck();
         ArrayList<Card> firstHand = splitedDeck.get(0);
         ArrayList<Card> secondHand = splitedDeck.get(1);
 
@@ -72,7 +72,7 @@ public class DeckTest {
         ArrayList<Card> cards = new ArrayList<>();
         var exception = Assertions.assertThrows(
                 IllegalStateException.class,
-                () -> deck.setCards(cards)
+                () -> gameDeck.setCards(cards)
         );
 
         Assertions.assertEquals("cards.size() must be 52", exception.getMessage());
