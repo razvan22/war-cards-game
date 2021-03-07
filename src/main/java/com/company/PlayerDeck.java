@@ -48,4 +48,8 @@ public class PlayerDeck implements DeckUtilities{
                 .findFirst()
                 .getAsInt();
     }
-        }
+
+    public int numberOfCardsInDeck(){
+        return cards.size();
+    }
+}
