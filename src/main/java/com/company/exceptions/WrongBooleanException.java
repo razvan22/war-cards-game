@@ -1,4 +1,4 @@
-package company.exceptions;
+package  com.company.exceptions;
 
 public class WrongBooleanException extends Exception {
 

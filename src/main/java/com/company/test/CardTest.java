@@ -1,6 +1,6 @@
-package company.test;
+package com.company.test;
 
-import company.Card;
+import com.company.Card;
 import org.junit.jupiter.api.*;
 
 

@@ -1,4 +1,4 @@
-package company;
+package com.company;
 
 public class Player {
 
@@ -14,11 +14,16 @@ public class Player {
         return name;
     }
 
-    public Card flipCard(){
+    public Card drawCard(){
+
        return playerDeck.drawCard();
     }
 
     public boolean addCardToDeck(Card card){
         return playerDeck.insertCard(card);
+    }
+
+    public PlayerDeck getPlayerDeck() {
+        return playerDeck;
     }
 }

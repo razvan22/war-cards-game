@@ -1,9 +1,9 @@
-package company;
+package com.company;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class PlayerDeck implements DeckUtilities{
+public class PlayerDeck implements DeckUtilities {
 
     private final ArrayList<Card> cards ;
 
@@ -24,7 +24,7 @@ public class PlayerDeck implements DeckUtilities{
 
         while (!success){
             try {
-                int randomIndex = randomIndex();
+                int randomIndex = randomCardIndexInDeck();
                 randomCard = cards.get(randomIndex);
                 cards.remove(randomCard);
                 success = true;
@@ -42,7 +42,7 @@ public class PlayerDeck implements DeckUtilities{
     }
 
     @Override
-    public int randomIndex() {
+    public int randomCardIndexInDeck() {
         Random random = new Random();
         return random.ints(0, cards.size())
                 .findFirst()

@@ -1,9 +1,10 @@
-package company;
+package com.company;
 
-import company.exceptions.WrongBooleanException;
+
 
 import java.util.ArrayList;
 import java.util.Random;
+import com.company.exceptions.WrongBooleanException;
 
 public class GameDeck implements DeckUtilities {
 
@@ -14,7 +15,6 @@ public class GameDeck implements DeckUtilities {
     public GameDeck(CardsFetcher cardsFetcher){
 
         if (cardsFetcher == null){
-
             throw  new NullPointerException("Cards fetcher should not be null");
         }
         else {
@@ -39,12 +39,14 @@ public class GameDeck implements DeckUtilities {
     }
 
     @Override
-    public int randomIndex() {
+    public int randomCardIndexInDeck() {
         Random random = new Random();
         return random.ints(0, cards.size())
                 .findFirst()
                 .getAsInt();
     }
+
+
 
     @Override
     public Card drawCard() {
@@ -53,7 +55,7 @@ public class GameDeck implements DeckUtilities {
 
         while (!success){
             try {
-                int randomIndex = randomIndex();
+                int randomIndex = randomCardIndexInDeck();
                 randomCard = cards.get(randomIndex);
                 cards.remove(randomCard);
                 success = true;

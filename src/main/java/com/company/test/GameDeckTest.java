@@ -1,8 +1,9 @@
-package company.test;
+package com.company.test;
 
-import company.Card;
-import company.CardsFetcher;
-import company.GameDeck;
+
+import com.company.Card;
+import com.company.CardsFetcher;
+import com.company.GameDeck;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 

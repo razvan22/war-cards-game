@@ -1,4 +1,4 @@
-package company;
+package com.company;
 
 public interface DeckUtilities {
 
@@ -6,6 +6,6 @@ public interface DeckUtilities {
 
    boolean insertCard(Card card);
 
-   int randomIndex();
+   int randomCardIndexInDeck();
 
 }

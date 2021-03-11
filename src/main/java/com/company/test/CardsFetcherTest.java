@@ -1,7 +1,7 @@
-package company.test;
+package com.company.test;
 
-import java.io.FileNotFoundException;
-import company.CardsFetcher;
+
+import com.company.CardsFetcher;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 

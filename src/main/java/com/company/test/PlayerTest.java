@@ -1,9 +1,9 @@
-package company.test;
+package com.company.test;
 
-import company.Card;
-import company.CardsFetcher;
-import company.Player;
-import company.PlayerDeck;
+import com.company.Card;
+import com.company.CardsFetcher;
+import com.company.Player;
+import com.company.PlayerDeck;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -20,7 +20,7 @@ public class PlayerTest {
         player = new Player("Jo",playerDeck);
 
         Assertions.assertNotNull(player.getName());
-        Assertions.assertNotNull(player.flipCard());
+        Assertions.assertNotNull(player.drawCard());
     }
     
     @Test
