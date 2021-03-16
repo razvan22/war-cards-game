@@ -9,7 +9,7 @@ import java.util.Arrays;
 import com.google.gson.Gson;
 
 public class CardsFetcher {
-    private final String cardsFilePath = "resources/deck_of_cards.json";
+    private String cardsFilePath = "resources/deck_of_cards.json";
     private ArrayList<Card> cards = null;
 
 
@@ -63,4 +63,7 @@ public class CardsFetcher {
         }
     }
 
+    public void setCardsFilePath(String cardsFilePath) {
+        this.cardsFilePath = cardsFilePath;
+    }
 }

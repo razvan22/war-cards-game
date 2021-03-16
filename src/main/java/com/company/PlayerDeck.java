@@ -52,4 +52,8 @@ public class PlayerDeck implements DeckUtilities {
     public int numberOfCardsInDeck(){
         return cards.size();
     }
+
+    public ArrayList<Card> getDeck() {
+        return cards;
+    }
 }

@@ -1,3 +1,4 @@
+
 package com.company;
 
 
@@ -10,85 +11,106 @@ import com.company.utility.GameUtilities;
 import java.util.ArrayList;
 
 public class Game {
-    private Player player1;
-    private Player player2;
-    private PlayerDeck firstPlayerDeck;
-    private PlayerDeck secondPlayerDeck;
-    private GameDeck gameDeck;
     private String winner;
-    private boolean playGame;
+    private boolean playing;
+    private GameDeck gameDeck;
+    private int playersTurn = 1;
+    private PlayerDeck firstPlayerDeck, secondPlayerDeck;
+    private Player currentPlayingPlayer, player1, player2;
 
-    public Game(){
-        gameDeck = new GameDeck(new CardsFetcher());
-        playGame = GameOptions.startStopGame();
-        initializeGamePlay();
-        runGame();
-
+    public Player getCurrentPlayingPlayer() {
+        return currentPlayingPlayer;
     }
 
-    private void runGame(){
+    public void setCurrentPlayingPlayer(Player currentPlayingPlayer) {
+        this.currentPlayingPlayer = currentPlayingPlayer;
+    }
 
-        while (playGame){
-            playHand();
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public void setPlayer1(Player player1) {
+        this.player1 = player1;
+    }
+
+    public void setPlayer2(Player player2) {
+        this.player2 = player2;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+
+    public GameDeck getGameDeck() {
+        return gameDeck;
+    }
+
+    public void setGameDeck(GameDeck gameDeck) {
+        this.gameDeck = gameDeck;
+    }
+
+    public Game(){
+        if (initializeGameDeck()){
+            initializePlayersDecks();
         }
     }
 
-    private void playHand(){
-        boolean playHand = true;
-        int numberOfPlayedCard = 0;
+    public void runGame(){
+        if (GameOptions.startStopGame()){
+            playing = addPlayers();
+            while (playing){
+                startPlaying();
+            }
+        } else {
+            System.out.println("\nExiting ....\n");
+        }
+
+    }
+
+    public void startPlaying(){
+        boolean isWar;
+           isWar = playHand();
+           if (isWar){
+               isWar = playHand();
+           }
+    }
+
+    public boolean playHand(){
+
+        int numberOfPlayedCards = 0;
         int firstPlayerDrawnCardValue = 0;
         int secondPlayerDrawnCardValue = 0;
 
-        int playerSelector = GameUtilities.randomInt();
+        while (playing){
+            playing = isGameOver();
+            if (!playing){
+                System.out.printf("\nGame Over %s is the winner! \n", getWinnersName());
+            }
 
-
-        while (playHand){
-            Player currentPlayer = selectPlayer(playerSelector);
-            GameOptions.displayCurrentPlayer(currentPlayer);
+            switchCurrentPlayingPlayer();
+            GameOptions.displayCurrentPlayer(currentPlayingPlayer);
             int selectedOption = GameInput.intInput("\n\n\n\n\n1. Draw a card.\n2. Quit Game.\n");
 
-
             if (selectedOption == 1){
-                Card drawnCard = currentPlayer.drawCard();
+                Card drawnCard = currentPlayingPlayer.drawCard();
                 gameDeck.insertCard(drawnCard);
-                numberOfPlayedCard++;
-                System.out.printf("\n%s has %s of %s \n",currentPlayer.getName(), drawnCard.getValue(), drawnCard.getSuit());
+                numberOfPlayedCards++;
+                System.out.printf("\n%s has %s of %s \n",currentPlayingPlayer.getName(), drawnCard.getValue(), drawnCard.getSuit());
 
-                if (playerSelector == 1){
+                if (currentPlayingPlayer.equals(player1)){
                     firstPlayerDrawnCardValue =  Integer.parseInt(drawnCard.getValue());
                 }
 
-                if(playerSelector == 2){
+                if(currentPlayingPlayer.equals(player2)){
                     secondPlayerDrawnCardValue = Integer.parseInt(drawnCard.getValue());
                 }
 
-                if (numberOfPlayedCard == 2){
+                if (numberOfPlayedCards == 2){
 
-                    if (firstPlayerDrawnCardValue == secondPlayerDrawnCardValue){
+                    if (firstPlayerDrawnCardValue == secondPlayerDrawnCardValue) {
                         System.out.println("\n***************WAR IS ON******************** \n");
-                        GameOptions.displayCurrentPlayer(currentPlayer);
-                        drawnCard = currentPlayer.drawCard();
-                        int firstCardInWar = Integer.parseInt(drawnCard.getValue());
-
-
-                        playerSelector = (playerSelector == 1) ?  2 : 1;
-                        currentPlayer = selectPlayer(playerSelector);
-                        GameOptions.displayCurrentPlayer(currentPlayer);
-                        drawnCard = currentPlayer.drawCard();
-                        int secondCardInWar = Integer.parseInt(drawnCard.getValue());
-
-
-                        if (firstCardInWar < secondCardInWar){
-                            System.out.printf("\n***** => %s wins!\n",player1.getName());
-                            gameDeck.getDeck().stream().forEach(card -> player1.addCardToDeck(card));
-                            gameDeck.getDeck().clear();
-                        }else {
-                            System.out.printf("\n***** => %s wins!\n",player2.getName());
-                            gameDeck.getDeck().stream().forEach(card -> player2.addCardToDeck(card));
-                            gameDeck.getDeck().clear();
-                        }
-
-
+                        return false;
                     }
 
                     if (firstPlayerDrawnCardValue > secondPlayerDrawnCardValue){
@@ -101,35 +123,36 @@ public class Game {
                         System.out.printf("\n***** => %s wins!\n",player2.getName());
                         gameDeck.getDeck().stream().forEach(card -> player2.addCardToDeck(card));
                         gameDeck.getDeck().clear();
-
                     }
-
-                    playHand = false;
+                    numberOfPlayedCards = 0;
+                    return false;
                 }
-                playerSelector = (playerSelector == 1) ?  2 : 1;
 
-                playGame = isGameOver();
-                if (!playGame){
-                    System.out.printf("\nGame Over %s is the winner! \n", getWinnersName());
-                }
+
             }
+
             if (selectedOption == 2){
-                System.out.println("EXIT ");
-                playGame = false;
-                playHand = false;
+                System.out.printf("\n%s is quitting the game...\n", currentPlayingPlayer.getName());
+                playing = false;
             }
-        }
 
+        }
+        return false;
+    }
+    
+    public void switchCurrentPlayingPlayer(){
+        currentPlayingPlayer = (playersTurn == 1) ? player1 : player2;
+        playersTurn = (playersTurn == 1) ? 2: 1;
     }
 
-    private boolean isGameOver(){
+    public boolean isGameOver(){
         if (player1.getPlayerDeck().numberOfCardsInDeck() == 0 || player2.getPlayerDeck().numberOfCardsInDeck() == 0){
             return false;
         }
         else return true;
     }
 
-    private String getWinnersName(){
+    public String getWinnersName(){
         if (player1.getPlayerDeck().numberOfCardsInDeck() != 0){
             return player1.getName();
         }
@@ -140,8 +163,11 @@ public class Game {
 
     private boolean addPlayers(){
         boolean success = false;
-        player1 = addPlayer(firstPlayerDeck, "\nWrite first player's name : ");
-        player2 = addPlayer(secondPlayerDeck, "\nWrite second player's name : ");
+        String firstPlayerName = GameInput.stringInput("\nWrite first player's name : ");
+        player1 = addPlayer(firstPlayerDeck,firstPlayerName );
+
+        String secondPlayerName = GameInput.stringInput("\nWrite second player's name : ");
+        player2 = addPlayer(secondPlayerDeck, secondPlayerName);
 
         if ((player2.getName() != null) && (player2.getName() != null)){
             success = true;
@@ -150,23 +176,11 @@ public class Game {
         return success;
     }
 
-    private Player addPlayer(PlayerDeck deck, String message){
-        String playerName = GameInput.stringInput(message);
-        return new Player(playerName, deck);
+    public Player addPlayer(PlayerDeck deck, String name){
+        return new Player(name, deck);
     }
 
-    private void initializeGamePlay(){
-
-        if (!playGame){
-            System.out.println("Exiting ....");
-        } else {
-            if (initializePlayersDecks()){
-                playGame = addPlayers();
-            }
-        }
-    }
-
-    private boolean initializePlayersDecks(){
+    public boolean initializePlayersDecks(){
         boolean success = false;
         ArrayList<ArrayList<Card>> gameDecks = gameDeck.splitDeck();
         firstPlayerDeck = new PlayerDeck(gameDecks.get(0));
@@ -177,12 +191,9 @@ public class Game {
         return success;
     }
 
-    private Player selectPlayer(int selector){
-        if (selector == 1)return player1;
-        else  return player2;
+    public boolean initializeGameDeck(){
+        gameDeck = new GameDeck(new CardsFetcher());
+        return gameDeck.initializeDeck();
     }
 
-
-
 }
-
